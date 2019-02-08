@@ -14,26 +14,19 @@ import (
 const shadowLength = 100
 
 func main() {
-	rectangles := []gfx.Rect{
-		gfx.R(0, 0, 100, 100).Moved(gfx.V(20, 20)),
-	}
+	r := gfx.R(0, 0, 100, 100).Moved(gfx.V(20, 20))
 
 	// Draw input polygons
 	polygonImg := gfx.NewImage(200, 200, color.Transparent)
-	for _, r := range rectangles {
-		polygon := gfxutil.NewRectPolygon(r)
-		gfx.DrawPolygon(polygonImg, polygon, 0, colornames.Pink)
-	}
+	polygon := gfxutil.NewRectPolygon(r)
+	gfx.DrawPolygon(polygonImg, polygon, 0, colornames.Pink)
 	gfx.SavePNG("polygons.png", polygonImg)
 
 	// Draw shadows
 	shadowImg := gfx.NewImage(200, 200, color.Transparent)
 	c := color.Black
-	for _, r := range rectangles {
-		polygon := gfxutil.NewRectPolygon(r)
-		offset := gfx.V(shadowLength, 0).Rotated(3 * math.Pi / 8)
-		gfxutil.DrawShadows(shadowImg, polygon, offset, c)
-	}
+	offset := gfx.V(shadowLength, 0).Rotated(3 * math.Pi / 8)
+	gfxutil.DrawShadows(shadowImg, polygon, offset, c)
 	gfx.SavePNG("shadows.png", shadowImg)
 
 	// Combine
